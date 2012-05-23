@@ -1,0 +1,40 @@
+
+.shuggest-tooltip {
+  background: #ffd;
+  border: 1px solid #999;
+  padding: 5px;
+  width: 450px;
+  position: relative;
+}
+
+.shuggest-tooltip ul {
+  list-style: none;
+  padding: 0;
+}
+
+.shuggest-tooltip li {
+  margin: 2px 0;
+}
+
+.shuggest-tooltip li span {
+  color: #999;
+  margin: 5px;
+}
+
+.shuggest-tooltip-close {
+    display: block;
+    top: 5px;
+    right: 5px;
+    position: absolute;    
+    width: 18px;
+    height: 16px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.shuggest-usage {
+	cursor: help;
+}
