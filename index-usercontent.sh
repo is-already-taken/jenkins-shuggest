@@ -23,6 +23,8 @@ Synopsis
 
         # usercontent-index.descr=Description goes here
         # usercontent-index.usage=Usage goes here
+        # usercontent-index.requires=Description of requires Env variables or
+        								or files goes here
 
 Options
     find options      Options to narrow find's search results.
@@ -61,8 +63,9 @@ JSON="["
 for F in `find $USERCONTENT_PATH -type f ! -name "readme.txt" ! -name "index.json" $FIND_OPTS | sed 's+.*userContent/++g' 2>/dev/null`; do 
 	DESCR="`cat $USERCONTENT_PATH/$F | grep 'usercontent-index.descr' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
 	USAGE="`cat $USERCONTENT_PATH/$F | grep 'usercontent-index.usage' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
+	REQ="`cat $USERCONTENT_PATH/$F | grep 'usercontent-index.requires' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
 
-	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\"},"
+	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\", "requires": \"$REQ\"},"
 done
 
 JSON="`echo $JSON | sed 's+,$++'`]"

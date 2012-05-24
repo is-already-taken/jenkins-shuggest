@@ -34,6 +34,9 @@
 				+ (item.usage ? 
 						' <span class="shuggest-usage" title="'+ item.usage
 						+'">[?]</span>' : '')
+				+ (item.requires ? 
+						' <span class="shuggest-requires" title="'+ item.requires
+						+'">[!]</span>' : '')
 				+' [<a href="/userContent/' + path
 				+ '/*view*/" target="_blank">show</a>]' + '</li>';
 	}

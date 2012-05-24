@@ -38,6 +38,6 @@
     cursor: pointer;
 }
 
-.shuggest-usage {
+.shuggest-usage, .shuggest-requires {
 	cursor: help;
 }
