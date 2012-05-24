@@ -35,6 +35,15 @@ $ index-usercontent.sh -name "*.sh" ! -name "test.sh"
 
 And as you can see, you can also use find options to filter your files.
 
+## How to install
+
+After installing the required plugins add the following lines to the "Footer HTML" textarea on the System configuration page:  
+
+```
+<link rel="stylesheet" type="text/css" href="/userContent/shuggest.css" />
+<script type="text/javascript" src="/userContent/shuggest.js"></script>
+```
+
 ## Requirements
 
 * [Jenkins jQuery Plugin](https://wiki.jenkins-ci.org/display/JENKINS/jQuery+Plugin)
