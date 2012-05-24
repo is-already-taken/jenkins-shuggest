@@ -41,7 +41,6 @@
 	function renderList(list) {
 		var s = "<ul>", i;
 		for (i = 0; i < list.length; i++) {
-			// console.debug(list[i]);
 			s += renderItem(list[i]);
 		}
 		return s + "</ul>";
@@ -62,7 +61,9 @@
 				 * the new shell command item click.
 				 */ 
 				if (el.attr(DATA_ATTR_TOOLTIP_ATTACHED) == "true") {
-					console.debug("Tooltip already attached to input element.");
+					if (typeof console !== "undefined") {
+						console.debug("Shuggest: tooltip already attached to input element.");
+					}
 					return;
 				}
 				
@@ -77,7 +78,9 @@
 			+ renderList(shuggestData)
 			+ '<span class="shuggest-tooltip-close">x</span></div>');
 
-		console.debug("Decorating textarea el", el, renderList(shuggestData));
+		if (typeof console !== "undefined") {
+			console.debug("Shuggest: decorating textarea el", el, renderList(shuggestData));
+		}
 
 		el.parent().append(infoEl);
 		el.bind("focus", function() {
@@ -97,7 +100,9 @@
 				linkEl.attr(DATA_ATTR_SH_CMD)
 			);
 
-			console.debug("Clicked command link", linkEl, textEl, shellCommand);
+			if (typeof console !== "undefined") {
+				console.debug("Shuggest: clicked command link", linkEl, textEl, shellCommand);
+			}
 
 			textEl[0].value = textEl[0].value + "\n" + shellCommand;
 		});
@@ -113,7 +118,10 @@
 		url : SHELL_SCRIPT_IDX,
 		success : function(data) {
 			shuggestData = eval("(" + data + ")");
-			console.debug("Loaded Shuggest data", shuggestData);
+			
+			if (typeof console !== "undefined") {
+				console.debug("Shuggest: loaded Shuggest data", shuggestData);
+			}
 			
 			applyTooltips();
 		}
@@ -130,7 +138,9 @@
 	    item = jQuery(e.originalTarget);
 	    
 	    if (item.hasClass("yuimenuitemlabel-selected")) {
-	        console.debug("Clicked item in Add XYZ-Step Menu");
+	    	if (typeof console !== "undefined") {
+	    		console.debug("Shuggest: clicked item in Add XYZ-Step Menu");
+	    	}
 	        
 	        window.setTimeout(function(){
 	        	applyTooltips();
