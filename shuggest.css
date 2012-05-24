@@ -4,7 +4,7 @@
   border: 1px solid #999;
   border-radius: 4px;
   padding: 5px;
-  width: 450px;
+  width: 550px;
   position: relative;
   margin-top: 1px;
 }
@@ -21,7 +21,7 @@
 
 .shuggest-tooltip li span {
   color: #999;
-  margin: 5px;
+  margin: 2px;
 }
 
 .shuggest-tooltip-close {
