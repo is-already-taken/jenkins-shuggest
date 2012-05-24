@@ -1,10 +1,6 @@
 # Shuggest
 
-Shuggest is a modest script that displays a tooltip under each shell script 
-textarea on a job configuration page showing all available files (scripts) 
-(with description too)  in your userContent directory. A item can be clicked 
-to put the full qualified path into the textarea. You can also hover info 
-"icons" to get more information. The magic will be described below.
+Shuggest is a modest script that displays a tooltip under each shell script textarea on a job configuration page showing all available files (scripts) (with description too)  in your userContent directory. A item can be clicked  to put the full qualified path into the textarea. You can also hover info "icons" to get more information. The magic will be described below.
 
 The word [ʃhu'ɡest] is a combination of shell and suggest.  :)
 
@@ -19,12 +15,9 @@ The word [ʃhu'ɡest] is a combination of shell and suggest.  :)
 
 ## The magic
 
-The extension needs a index file which shows the file names available. The index
-file has to be placed within the userContent/ directory. There's a shellscript 
-that will generate this index file for you.
+The extension needs a index file which shows the file names available. The index file has to be placed within the userContent/ directory. There's a shellscript  that will generate this index file for you.
 
-Scripts may contain comments with key=value definitions for description, usage 
-and requirements such as follows.
+Scripts may contain comments with key=value definitions for description, usage and requirements such as follows.
 
 ```
 # shuggest.descr=This script makes CI working like a charm
@@ -50,10 +43,7 @@ And as you can see, you can also use find options to filter your files.
 
 ## Tips
 
-In my environment I put all my assistance scripts into a Git repository.  
-A dedicated job will clone the repository and copy the files into the 
-userContent directory. As a second build step I call the index script to update
-the index. 
+In my environment I put all my assistance scripts into a Git repository. A dedicated job will clone the repository and copy the files into the userContent directory. As a second build step I call the index script to update the index. 
 
 ## License 
 
