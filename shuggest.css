@@ -2,14 +2,17 @@
 .shuggest-tooltip {
   background: #ffd;
   border: 1px solid #999;
+  border-radius: 4px;
   padding: 5px;
   width: 450px;
   position: relative;
+  margin-top: 1px;
 }
 
 .shuggest-tooltip ul {
   list-style: none;
   padding: 0;
+  margin: 5px;
 }
 
 .shuggest-tooltip li {

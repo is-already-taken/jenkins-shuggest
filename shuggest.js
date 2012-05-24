@@ -18,12 +18,17 @@
  * 
  */
 (function() {
-	var DATA_ATTR_NAME = "data-us-sh-command";
+	
+	var SHELL_SCRIPT_IDX = "/userContent/index.json/*view*/",
+		DATA_ATTR_SH_CMD = "data-us-sh-cmd",
+		DATA_ATTR_TOOLTIP_ATTACHED = "data-us-attached";
+	
+	var shuggestData = null;
 
 	function renderItem(item) {
 		var path = item.path;
 
-		return '<li><a href="javascript:void(0);" ' + DATA_ATTR_NAME + '="'
+		return '<li><a href="javascript:void(0);" ' + DATA_ATTR_SH_CMD + '="'
 				+ item.path + '">' + path + '</a>' + " <span>"
 				+ item.description + '</span>'
 				+ (item.usage ? 
@@ -45,55 +50,92 @@
 	function prepareShellCommand(command){
 		return "$JENKINS_HOME/userContent/" + command;
 	}
-
-	function decorate(list) {
+	
+	function applyTooltips(){
+		// iterating all (shell command) input boxes
 		jQuery('textarea[name="command"]')
-				.each(function(idx, el) {
-					el = jQuery(el);
-					
-					var aEl, infoEl = jQuery('<div class="shuggest-tooltip">'
-						+ renderList(list)
-						+ '<span class="shuggest-tooltip-close">x</span></div>');
-
-					console.debug("textarea", el, renderList(list));
-
-					el.parent().append(infoEl);
-					el.bind("focus", function() {
-						infoEl.show();
-					});
-
-					aEl = infoEl.find("a[" + DATA_ATTR_NAME + "]");
-					aEl.click(function() {
-						var linkEl = jQuery(this), textEl, shellCommand;
-						
-						// get textarea next to tooltip's element
-						textEl = linkEl
-							.parents("td.setting-main")
-							.find("textarea");
-								
-						shellCommand = prepareShellCommand(
-							linkEl.attr(DATA_ATTR_NAME)
-						);
-
-						console.debug(linkEl, textEl, shellCommand);
-
-						textEl[0].value = textEl[0].value + "\n" + shellCommand;
-					});
-
-					infoEl.children(".shuggest-tooltip-close")
-						.click(function() {
-							infoEl.hide();
-						});
-				});
+			.each(function(idx, el) {
+				el = jQuery(el);
+				
+				/* Testing for previously attached tooltip. 
+				 * This function is also called by a click handler catching
+				 * the new shell command item click.
+				 */ 
+				if (el.attr(DATA_ATTR_TOOLTIP_ATTACHED) == "true") {
+					console.debug("Tooltip already attached to input element.");
+					return;
+				}
+				
+				decorate(el);
+				
+				el.attr(DATA_ATTR_TOOLTIP_ATTACHED, true);
+		});
 	}
 
+	function decorate(el) {
+		var aEl, infoEl = jQuery('<div class="shuggest-tooltip">'
+			+ renderList(shuggestData)
+			+ '<span class="shuggest-tooltip-close">x</span></div>');
+
+		console.debug("Decorating textarea el", el, renderList(shuggestData));
+
+		el.parent().append(infoEl);
+		el.bind("focus", function() {
+			infoEl.show();
+		});
+
+		aEl = infoEl.find("a[" + DATA_ATTR_SH_CMD + "]");
+		aEl.click(function() {
+			var linkEl = jQuery(this), textEl, shellCommand;
+			
+			// get textarea next to tooltip's element
+			textEl = linkEl
+				.parents("td.setting-main")
+				.find("textarea");
+					
+			shellCommand = prepareShellCommand(
+				linkEl.attr(DATA_ATTR_SH_CMD)
+			);
+
+			console.debug("Clicked command link", linkEl, textEl, shellCommand);
+
+			textEl[0].value = textEl[0].value + "\n" + shellCommand;
+		});
+
+		infoEl.children(".shuggest-tooltip-close")
+			.click(function() {
+				infoEl.hide();
+			});
+	}
+
+	// load shell script index
 	jQuery.ajax({
-		url : "/userContent/index.json/*view*/",
+		url : SHELL_SCRIPT_IDX,
 		success : function(data) {
-			data = eval("(" + data + ")");
-			console.debug(data);
-			decorate(data);
+			shuggestData = eval("(" + data + ")");
+			console.debug("Loaded Shuggest data", shuggestData);
+			
+			applyTooltips();
 		}
+	});
+	
+	// monitor click on "new command" items
+	jQuery("body").click(function(e){
+		var item;
+		
+		if (e.target.nodeName !== "A") {
+	        return;
+	    }
+		
+	    item = jQuery(e.originalTarget);
+	    
+	    if (item.hasClass("yuimenuitemlabel-selected")) {
+	        console.debug("Clicked item in Add XYZ-Step Menu");
+	        
+	        window.setTimeout(function(){
+	        	applyTooltips();
+	        },1000);
+	    }
 	});
 
 })();
