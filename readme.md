@@ -1,21 +1,21 @@
 # Shuggest
 
-Shuggest is a modest script that displays a tooltip under each shell script textarea on a job configuration page showing all available files (scripts) (with description too)  in your userContent directory. A item can be clicked  to put the full qualified path into the textarea. You can also hover info "icons" to get more information. The magic will be described below.
+Shuggest is a modest script that displays a tooltip under each shell script textarea on a job configuration page showing all available files e.g. scripts (with description too, for that see below) in your userContent directory. An item can be clicked to put the full qualified path into the textarea. You can also hover info "icons" to get more information. The magic will be described below.
 
-The word [ʃhu'ɡest] is a combination of shell and suggest.  :)
+The word [ʃʊ'ɡest] is a combination of shell and suggest.  :)
 
 ## Features
 
 * Display the script name
-* Display information such as description, usage, requires when hovering a icon
+* Display information such as description, usage, requires when hovering an icon
 * On click the shell command is pasted into the textarea
-* Tooltip is already open (might be considered as a bug though ;) ...
+* The tooltip is already open (might be considered as a bug though ;) ...
 * ... but can be close although
 * Is not only limited to scripts (though it's its most likely usage, I think)
 
 ## The magic
 
-The extension needs a index file which shows the file names available. The index file has to be placed within the userContent/ directory. There's a shellscript  that will generate this index file for you.
+The extension needs an index file which shows the file names available. The index file has to be placed within the userContent/ directory. There's a shellscript that will generate this index file for you.
 
 Scripts may contain comments with key=value definitions for description, usage and requirements such as follows.
 
@@ -37,7 +37,7 @@ And as you can see, you can also use find options to filter your files.
 
 ## How to install
 
-After installing the required plugins add the following lines to the "Footer HTML" textarea on the System configuration page:  
+First, install the required plugins. Then put the shuggest.js and .css into your userContent directory add the following lines to the "Footer HTML" textarea on the System configuration page:  
 
 ```
 <link rel="stylesheet" type="text/css" href="/userContent/shuggest.css" />
