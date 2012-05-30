@@ -23,7 +23,8 @@
 		DATA_ATTR_SH_CMD = "data-us-sh-cmd",
 		DATA_ATTR_TOOLTIP_ATTACHED = "data-us-attached";
 	
-	var shuggestData = null;
+	var basePath = jQuery('script[src$="shuggest.js"]').attr("src").replace(/userContent\/.*$/, ""),
+		shuggestData = null;
 
 	function escapeHtml(str) {
 		return str.replace(/"/g, "\\\"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -122,7 +123,7 @@
 
 	// load shell script index
 	jQuery.ajax({
-		url : SHELL_SCRIPT_IDX,
+		url: basePath + "/" + SHELL_SCRIPT_IDX,
 		success : function(data) {
 			shuggestData = eval("(" + data + ")");
 			
