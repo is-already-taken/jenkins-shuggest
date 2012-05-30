@@ -25,17 +25,21 @@
 	
 	var shuggestData = null;
 
+	function escapeHtml(str) {
+		return str.replace(/"/g, "\\\"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	}
+	
 	function renderItem(item) {
 		var path = item.path;
 
 		return '<li><a href="javascript:void(0);" ' + DATA_ATTR_SH_CMD + '="'
-				+ item.path + '">' + path + '</a>' + " <span>"
-				+ item.description + '</span>'
+				+ escapeHtml(item.path) + '">' + path + '</a>' + " <span>"
+				+ escapeHtml(item.description) + '</span>'
 				+ (item.usage ? 
-						' <span class="shuggest-usage" title="'+ item.usage
+						' <span class="shuggest-usage" title="'+ escapeHtml(item.usage)
 						+'">[?]</span>' : '')
 				+ (item.requires ? 
-						' <span class="shuggest-requires" title="'+ item.requires
+						' <span class="shuggest-requires" title="'+ escapeHtml(item.requires)
 						+'">[!]</span>' : '')
 				+' [<a href="/userContent/' + path
 				+ '/*view*/" target="_blank">show</a>]' + '</li>';
