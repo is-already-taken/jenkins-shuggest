@@ -23,8 +23,8 @@ Synopsis
 
         # shuggest.descr=Description goes here
         # shuggest.usage=Usage goes here
-        # shuggest.requires=Description of requires Env variables or
-                               files goes here
+        # shuggest.consumes=Description what this script consumes
+        # shuggest.produces=Description what this script produces
 
 Options
     find options      Options to narrow find's search results.
@@ -63,9 +63,10 @@ JSON="["
 for F in `find $USERCONTENT_PATH -type f ! -name "readme.txt" ! -name "index.json" $FIND_OPTS | sed 's+.*userContent/++g' 2>/dev/null`; do 
 	DESCR="`cat $USERCONTENT_PATH/$F | grep 'shuggest.descr' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
 	USAGE="`cat $USERCONTENT_PATH/$F | grep 'shuggest.usage' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
-	REQ="`cat $USERCONTENT_PATH/$F | grep 'shuggest.requires' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
+	CONS="`cat $USERCONTENT_PATH/$F | grep 'shuggest.consumes' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
+	PROD="`cat $USERCONTENT_PATH/$F | grep 'shuggest.produces' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
 
-	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\", "requires": \"$REQ\"},"
+	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\", "consumes": \"$CONS\", "produces": \"$PROD\"},"
 done
 
 JSON="`echo $JSON | sed 's+,$++'`]"

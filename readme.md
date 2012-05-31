@@ -6,10 +6,10 @@ The word [ʃʊ'ɡest] is a combination of shell and suggest.  :)
 
 ## Features
 
-* Display the script name
-* Display information such as description, usage, requires when hovering an icon
+* Display the script name and shot description
+* Detailed information (usage, consumes and produces) is opened when clicking on "more ..."
 * On click the shell command is pasted into the textarea
-* The tooltip is already open (might be considered as a bug though ;) ...
+* The tooltip is initially open (might be considered as a bug though ;) ...
 * ... but can be close although
 * Is not only limited to scripts (though it's its most likely usage, I think)
 
@@ -22,7 +22,8 @@ Scripts may contain comments with key=value definitions for description, usage a
 ```
 # shuggest.descr=This script makes CI working like a charm
 # shuggest.usage=<Param A> [<Param B>]
-# shuggest.requires=Env-Var VARIABLE, File: file.txt, Some plugin
+# shuggest.consumes=Env-Var VARIABLE, File: file.txt, Some plugin
+# shuggest.produces=output.file
 ```
 
 You will run this index script once after changing your files (shell scripts).

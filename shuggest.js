@@ -25,20 +25,42 @@
 	
 	var shuggestData = null;
 
+	function escapeHtml(str){
+		return str.replace(/"/g, "&quot;").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	}
+	
+	function renderDetail(str, cls){
+		if (str) {
+			return '<div class="shuggest-detail shuggest-'
+				+ cls +'">' 
+				+ escapeHtml(str) + '</div>';
+		}
+		return "";
+	}
+	
 	function renderItem(item) {
 		var path = item.path;
 
-		return '<li><a href="javascript:void(0);" ' + DATA_ATTR_SH_CMD + '="'
-				+ item.path + '">' + path + '</a>' + " <span>"
-				+ item.description + '</span>'
-				+ (item.usage ? 
-						' <span class="shuggest-usage" title="'+ item.usage
-						+'">[?]</span>' : '')
-				+ (item.requires ? 
-						' <span class="shuggest-requires" title="'+ item.requires
-						+'">[!]</span>' : '')
-				+' [<a href="/userContent/' + path
-				+ '/*view*/" target="_blank">show</a>]' + '</li>';
+		var str =  '<li>'
+			+ '<div class="shuggest-overview">'
+				+ '<a class="shuggest-script" href="javascript:void(0);" ' + DATA_ATTR_SH_CMD + '="'
+				+ path + '">' + path + '</a>'
+				+ '<span class="shuggest-descr">'+ escapeHtml(item.description) +'</span>'
+				+ '<a class="shuggest-more" href="javascript:void(0);">more ...</a>'
+			+ '</div>'
+			+ '<div class="shuggest-details">'
+				+ '<div class="shuggest-detail shuggest-fulldesc">'
+					+ escapeHtml(item.description)
+					+' [<a href="/userContent/' + path
+					+ '/*view*/" target="_blank">show</a>]'
+				+ '</div>'
+				+ renderDetail(item.usage, "usage")
+				+ renderDetail(item.consumes, "consumes")
+				+ renderDetail(item.produces, "produces")
+			+ '</div>'
+		+ '</li>';
+		
+		return str;
 	}
 
 	function renderList(list) {
@@ -77,7 +99,7 @@
 	}
 
 	function decorate(el) {
-		var aEl, infoEl = jQuery('<div class="shuggest-tooltip">'
+		var aEl, moreEl, infoEl = jQuery('<div class="shuggest-tooltip">'
 			+ renderList(shuggestData)
 			+ '<span class="shuggest-tooltip-close">x</span></div>');
 
@@ -91,6 +113,8 @@
 		});
 
 		aEl = infoEl.find("a[" + DATA_ATTR_SH_CMD + "]");
+		moreEl = infoEl.find("a.shuggest-more");
+		
 		aEl.click(function() {
 			var linkEl = jQuery(this), textEl, shellCommand;
 			
@@ -108,6 +132,21 @@
 			}
 
 			textEl[0].value = textEl[0].value + "\n" + shellCommand;
+		});
+		
+		moreEl.click(function(){
+			var linkEl = jQuery(this), 
+				detailEl = linkEl.parent().next(),
+				allDetailEl = linkEl.parents("ul").find(".shuggest-details"),
+				isOpen = detailEl.hasClass("shuggest-details-open");
+			
+			allDetailEl.removeClass("shuggest-details-open");
+			
+			if (isOpen) {
+				return;
+			}
+			
+			detailEl.addClass("shuggest-details-open");
 		});
 
 		infoEl.children(".shuggest-tooltip-close")

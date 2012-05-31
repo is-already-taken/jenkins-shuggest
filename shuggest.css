@@ -21,7 +21,12 @@
 
 .shuggest-tooltip li span {
   color: #999;
-  margin: 2px;
+}
+
+a.shuggest-more {
+	color: #333333;
+    text-decoration: none;
+    margin-right: 20px;
 }
 
 .shuggest-tooltip-close {
@@ -35,9 +40,48 @@
     border-radius: 5px;
     text-align: center;
     font-weight: bold;
-    cursor: pointer;
 }
 
-.shuggest-usage, .shuggest-requires {
-	cursor: help;
+.shuggest-descr {
+	color: #999;
+    display: inline-block;
+    margin: -3px 5px;
+    overflow: hidden;
+    padding: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 250px;
+}
+
+.shuggest-details {
+	display: none;
+	background-color: #eec;
+	padding: 2px;
+	margin: 2px 0;
+}
+
+.shuggest-details-open {
+	display: block;	
+}
+
+.shuggest-detail {
+	padding-left: 20px;
+	margin-bottom: 5px;
+}
+
+.shuggest-fulldesc {
+	margin-bottom: 5px;
+	padding: 0p;
+}
+
+.shuggest-usage {
+	background: url(data:image/gif;base64,R0lGODlhEAAQAIABAAAAAP///yH5BAEKAAEALAAAAAAQABAAAAIbjI+pywfQ0ot0vUkvrAFXn22fyGhaaYLcyioFADs=) no-repeat scroll left top;
+}
+
+.shuggest-consumes {
+	background: url(data:image/gif;base64,R0lGODlhEAAQAIABAAAAAP///yH5BAEKAAEALAAAAAAQABAAAAIgjI+pywvQ0otoRhhsm/q8D2JVCFKcyGDdhbKU175yUgAAOw==) no-repeat scroll left top;
+}
+
+.shuggest-produces {
+	background: url(data:image/gif;base64,R0lGODlhEAAQAIABAAAAAP///yH5BAEKAAEALAAAAAAQABAAAAIfjI+puwCsHExynnoZNvu6D0bgKFJPiZyoFXSQy8ZsAQA7) no-repeat scroll left top;
 }
