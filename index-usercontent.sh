@@ -61,10 +61,10 @@ FIND_OPTS="$*"
 JSON="["
 
 for F in `find $USERCONTENT_PATH -type f ! -name "readme.txt" ! -name "index.json" $FIND_OPTS | sed 's+.*userContent/++g' 2>/dev/null`; do 
-	DESCR="`cat $USERCONTENT_PATH/$F | grep 'shuggest.descr' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
-	USAGE="`cat $USERCONTENT_PATH/$F | grep 'shuggest.usage' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
-	CONS="`cat $USERCONTENT_PATH/$F | grep 'shuggest.consumes' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
-	PROD="`cat $USERCONTENT_PATH/$F | grep 'shuggest.produces' | sed 's+^#[^=]*=\(.*\)$+\1+'`"
+	DESCR="`cat $USERCONTENT_PATH/$F | grep 'shuggest.descr' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
+	USAGE="`cat $USERCONTENT_PATH/$F | grep 'shuggest.usage' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
+	CONS="`cat $USERCONTENT_PATH/$F | grep 'shuggest.consumes' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
+	PROD="`cat $USERCONTENT_PATH/$F | grep 'shuggest.produces' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
 
 	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\", "consumes": \"$CONS\", "produces": \"$PROD\"},"
 done
