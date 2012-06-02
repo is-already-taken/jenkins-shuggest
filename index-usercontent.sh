@@ -35,6 +35,11 @@ Options
 EOH
 }
 
+
+function get_prop(){
+	cat $USERCONTENT_PATH/$F | grep "$1" | sed 's+^.*#[^=]*=\(.*\)$+\1+'
+}
+
 if [[ $1 =~ ^-(-help|h|\?)$ ]]; then
 	help
 	exit 0
@@ -55,16 +60,36 @@ if [ ! -d $USERCONTENT_PATH ]; then
 	exit 1
 fi
 
-FIND_OPTS="$*"
 
+GLOBBING_OFF=0
+if [[ $- =~ f ]]; then
+	GLOBBING_OFF=1
+fi
+
+set -f
+
+ARGS=""
+for ARG in $@; do
+	if [[ "$ARG" =~ ^-.* ]]; then
+		ARGS="$ARGS $ARG"
+	else
+		ARGS="$ARGS '$ARG'"
+	fi
+done
+
+if [ $GLOBBING_OFF -eq 0 ]; then
+	set +f
+else
+	set -f
+fi
 
 JSON="["
 
-for F in `find $USERCONTENT_PATH -type f ! -name "readme.txt" ! -name "index.json" $FIND_OPTS | sed 's+.*userContent/++g' 2>/dev/null`; do 
-	DESCR="`cat $USERCONTENT_PATH/$F | grep 'shuggest.descr' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
-	USAGE="`cat $USERCONTENT_PATH/$F | grep 'shuggest.usage' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
-	CONS="`cat $USERCONTENT_PATH/$F | grep 'shuggest.consumes' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
-	PROD="`cat $USERCONTENT_PATH/$F | grep 'shuggest.produces' | sed 's+^#[^=]*=\(.*\)$+\1+' | sed 's+"+\\\\"+g'`"
+for F in `eval "find $USERCONTENT_PATH -type f $ARGS ! -name readme.txt ! -name index.json ! -name $BINNAME 2>/dev/null | sed 's+.*userContent/++g'"`; do
+	DESCR="`get_prop 'shuggest.descr'`"
+	USAGE="`get_prop 'shuggest.usage'`"
+	CONS="`get_prop 'shuggest.consumes'`"
+	PROD="`get_prop 'shuggest.produces'`"
 
 	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\", "consumes": \"$CONS\", "produces": \"$PROD\"},"
 done
