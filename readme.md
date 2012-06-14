@@ -6,7 +6,7 @@ The word [ʃʊ'ɡest] is a combination of shell and suggest.  :)
 
 ## Features
 
-* Display the script name and shot description
+* Display the script name and short description
 * Detailed information (usage, consumes and produces) is opened when clicking on "more ..."
 * On click the shell command is pasted into the textarea
 * The tooltip is initially open (might be considered as a bug though ;) ...
