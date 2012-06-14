@@ -37,7 +37,7 @@ EOH
 
 
 function get_prop(){
-	cat $USERCONTENT_PATH/$F | grep "$1" | sed 's+^.*#[^=]*=\(.*\)$+\1+'
+	cat $USERCONTENT_PATH/$F | grep "$1" | sed 's+^.*#[^=]*=\(.*\)$+\1+' | sed 's+"+\\"+g'
 }
 
 if [[ $1 =~ ^-(-help|h|\?)$ ]]; then
@@ -91,7 +91,7 @@ for F in `eval "find $USERCONTENT_PATH -type f $ARGS ! -name readme.txt ! -name 
 	CONS="`get_prop 'shuggest.consumes'`"
 	PROD="`get_prop 'shuggest.produces'`"
 
-	JSON="$JSON{"path": \"$F\", "description": \"$DESCR\", "usage": \"$USAGE\", "consumes": \"$CONS\", "produces": \"$PROD\"},"
+	JSON="$JSON{\"path\": \"$F\", \"description\": \"$DESCR\", \"usage\": \"$USAGE\", \"consumes\": \"$CONS\", \"produces\": \"$PROD\"},"
 done
 
 JSON="`echo $JSON | sed 's+,$++'`]"
